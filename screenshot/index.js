@@ -1,11 +1,17 @@
 const puppeteer = require('puppeteer');
 
 module.exports = async function (context, req) {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+        args: ["--no-sandbox"]
+    });
     const page = await browser.newPage();
-    await page.goto('https://azure.microsoft.com/en-ca/services/functions/');
+    await page.setViewport({
+        width : 1024,
+        height : 800
+    });
+    await page.goto('https://azure.microsoft.com/services/functions/');
     const screenshotBuffer = await page.screenshot({
-        fullPage: true
+        fullPage: false
     });
 
     await browser.close();
